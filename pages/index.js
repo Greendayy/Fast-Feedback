@@ -1,10 +1,10 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { useAuth } from '../lib/auth'
-import styles from '../styles/Home.module.css'
+import Head from 'next/head';
+import Image from 'next/image';
+import styles from '../styles/Home.module.css';
+import { useAuth } from '../lib/auth';
 
 export default function Home() {
-  const auth=useAuth
+  const auth = useAuth;
   return (
     <div className={styles.container}>
       <Head>
@@ -14,19 +14,25 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Fast Feedback
-        </h1>
-
+        <h1 className={styles.title}>Fast Feedback</h1>
         <p className={styles.description}>
           Get started by editing{' '}
           <code className={styles.code}>pages/index.js</code>
         </p>
-        <buttton onClick={(e)=>auth.signinWithGithub()}>Sign In</buttton>
+        {auth.user ? (
+          <div>
+            <p>Email: {auth.user.email}</p>
+            <button onClick={(e) => auth().signout()}>Sign Out</button>
+          </div>
+        ) : (
+          <button onClick={(e) => auth().signinWithGitHub()}>Sign In</button>
+        )}
+
+        {/* <button onClick={(e) => auth().signinWithGithub()}>Sign In</button>
         <div>{auth?.user?.email}</div>
         {auth?.user && (
-          <buttton onClick={(e)=>auth.signout()}>Sign Out</buttton>
-        )}
+          <button onClick={(e) => auth().signout()}>Sign Out</button>
+        )} */}
       </main>
 
       <footer className={styles.footer}>
@@ -42,5 +48,5 @@ export default function Home() {
         </a>
       </footer>
     </div>
-  )
+  );
 }

@@ -1,13 +1,25 @@
-import { ProvideAuth } from '../lib/auth'
-import '../styles/globals.css'
+import React from 'react';
+import { AuthProvider } from '../lib/auth';
 
-function MyApp({ Component, pageProps }) {
+const App = ({ Component, pageProps }) => {
   return (
-    <ProvideAuth>
-    <Component {...pageProps} />
-    </ProvideAuth>
-  )
+    <AuthProvider>
+      <Component {...pageProps} />
+    </AuthProvider>
+  );
+};
 
-}
+export default App;
 
-export default MyApp
+// import { ProvideAuth } from '../lib/auth';
+// import '../styles/globals.css';
+
+// function MyApp({ Component, pageProps }) {
+//   return (
+//     <ProvideAuth>
+//       <Component {...pageProps} />
+//     </ProvideAuth>
+//   );
+// }
+
+// export default MyApp;
