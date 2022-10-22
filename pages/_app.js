@@ -1,4 +1,3 @@
-import React from 'react';
 import { AuthProvider } from '../lib/auth';
 
 const App = ({ Component, pageProps }) => {
