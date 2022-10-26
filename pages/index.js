@@ -7,6 +7,7 @@ import { useAuth } from '../lib/auth';
 export default function Index() {
   //获取身份验证状态并在其更改时重新渲染
   const auth = useAuth();
+  const { email, name, photoUrl, provider, uid } = auth.user??{} ;
   return (
     <div className={styles.container}>
       <Head>
@@ -25,7 +26,10 @@ export default function Index() {
         {/* 用户授权为true则读取并显示用户email,button显示“sign out” */}
         {auth.user ? (
           <div>
-            <p>Email: {auth.user.email}</p>
+            <img src={photoUrl} width="60px" height="60px"></img>
+            <p>uid:{uid} {name}</p>
+            <p>Email: {email}</p>
+            <p>provider: {provider}</p>
             {/* 点击按钮调用signout函数清理用户数据 */}
             <button onClick={() => auth.signout()}>Sign Out</button>
           </div>
