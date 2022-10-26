@@ -1,24 +1,14 @@
+import React from 'react';
 import { AuthProvider } from '../lib/auth';
 
+//顶级组件App
 const App = ({ Component, pageProps }) => {
   return (
     <AuthProvider>
+      {/* 路由组件 */}
       <Component {...pageProps} />
     </AuthProvider>
   );
 };
 
 export default App;
-
-// import { ProvideAuth } from '../lib/auth';
-// import '../styles/globals.css';
-
-// function MyApp({ Component, pageProps }) {
-//   return (
-//     <ProvideAuth>
-//       <Component {...pageProps} />
-//     </ProvideAuth>
-//   );
-// }
-
-// export default MyApp;

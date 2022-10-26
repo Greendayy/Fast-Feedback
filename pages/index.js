@@ -1,10 +1,12 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/Home.module.css';
+//任何需要身份验证状态的组件
 import { useAuth } from '../lib/auth';
 
-export default function Home() {
-  const auth = useAuth;
+export default function Index() {
+  //获取身份验证状态并在其更改时重新渲染
+  const auth = useAuth();
   return (
     <div className={styles.container}>
       <Head>
@@ -19,15 +21,18 @@ export default function Home() {
           Get started by editing{' '}
           <code className={styles.code}>pages/index.js</code>
         </p>
+
+        {/* 用户授权为true则读取并显示用户email,button显示“sign out” */}
         {auth.user ? (
           <div>
             <p>Email: {auth.user.email}</p>
-            <button onClick={(e) => auth().signout()}>Sign Out</button>
+            {/* 点击按钮调用signout函数清理用户数据 */}
+            <button onClick={() => auth.signout()}>Sign Out</button>
           </div>
         ) : (
-          <button onClick={(e) => auth().signinWithGitHub()}>Sign In</button>
+          //点击按钮调用signinWithGitHub函数读取用户数据
+          <button onClick={() => auth.signinWithGitHub()}>Sign In</button>
         )}
-
         {/* <button onClick={(e) => auth().signinWithGithub()}>Sign In</button>
         <div>{auth?.user?.email}</div>
         {auth?.user && (
