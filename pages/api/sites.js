@@ -4,7 +4,7 @@ import db from '@/lib/firebase-admin';
 export default async (_, res) => {
   const snapshot = await db.collection('sites').get();
   const sites = [];
-
+  // console.log("snapshot",snapshot.docs,snapshot.size);
   snapshot.forEach((doc) => {
     sites.push({ id: doc.id, ...doc.data() });
   });

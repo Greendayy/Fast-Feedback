@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Link, Skeleton } from '@chakra-ui/core';
 import { Table, Tr, Th, Td } from './Table';
-import { format } from 'prettier';
+import { format,parseISO } from 'date-fns';
 
 const SiteTable = ({ sites }) => {
   return (
@@ -17,7 +17,7 @@ const SiteTable = ({ sites }) => {
       </thead>
       <tbody>
         {sites.map((site) => (
-          <Box as="tr" key={site.url}>
+          <Box as="tr" key={site.id}>
             <Td fontWeight="medium">{site.name}</Td>
             <Td>{site.url}</Td>
             <Td>
