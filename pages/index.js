@@ -2,11 +2,12 @@
 import Head from 'next/head';
 import { useAuth } from '@/lib/auth';
 import { Button, Code, Flex, Text, Icon } from '@chakra-ui/core';
-import EmptyState from '@/components/EmptyState';
+import Dashboard from './dashboard';
 
 export default function Index() {
   //获取身份验证状态并在其更改时重新渲染
   const auth = useAuth();
+
   // const { email, name, photoUrl, provider, uid } = auth.user ?? {};
   return (
     <Flex
@@ -33,7 +34,7 @@ export default function Index() {
           <p>Email: {email}</p>
           <p>provider: {provider}</p> */
         /* 点击按钮调用signout函数清理用户数据 */
-        <EmptyState />
+        <Dashboard />
       ) : (
         // <Button onClick={() => auth.signout()}>Sign Out</Button>
 

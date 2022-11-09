@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-// import { mutate } from 'swr';
+import { mutate } from 'swr';
 import { useRef } from 'react';
 import {
   Modal,
@@ -16,69 +16,48 @@ import {
   useToast,
   useDisclosure
 } from '@chakra-ui/core';
-import { createSite } from '@/lib/db';
 
-// import { useAuth } from '@/lib/auth';
+import { createSite } from '@/lib/db';
+import { useAuth } from '@/lib/auth';
+import { database } from 'firebase';
+import fetcher from '@/utils/fetcher';
+import { useRangeSlider } from '@chakra-ui/react';
 
 const AddSiteModal = ({ children }) => {
-  // const toast = useToast();
-  // const auth = useAuth();
   const initialRef = useRef();
+  const toast = useToast();
+  const auth = useAuth();
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   const { handleSubmit, register } = useForm();
-  const onCreateSite = (values) => createSite(values);
 
-  // const onCreateSite = ({ name, url }) => {
-  //   const newSite = {
-  //     authorId: auth.user.uid,
-  //     createdAt: new Date().toISOString(),
-  //     name,
-  //     url,
-  //     settings: {
-  //       icons: true,
-  //       timestamp: true,
-  //       ratings: false
-  //     }
-  //   };
-
-  //   const { id } = createSite(newSite);
-  //   toast({
-  //     title: 'Success!',
-  //     description: "We've added your site.",
-  //     status: 'success',
-  //     duration: 5000,
-  //     isClosable: true
-  //   });
-  //   mutate(
-  //     ['/api/sites', auth.user.token],
-  //     async (data) => ({
-  //       sites: [{ id, ...newSite }, ...data.sites]
-  //     }),
-  //     false
-  //   );
-  //   onClose();
-  // };
+  const onCreateSite = ({ name, url }) => {
+    const newSite = {
+      anthorId: auth.user.uid,
+      createdAt: new Date().toISOString(),
+      name,
+      url
+    };
+    createSite(newSite);
+    toast({
+      title: 'Success!',
+      description: "We've added your site.",
+      status: 'success',
+      duration: 5000,
+      isClosable: true
+    });
+    mutate(
+      '/api/sites',
+      async (data) => {
+        return { sites: [...data.sites, newSite] };
+      },
+      false
+    );
+    onClose();
+  };
 
   return (
     <>
       <Button
-        maxWidth="200px"
-        backgroundColor="gray.900"
-        color="white"
-        fontWeight="medium"
-        mt={4}
-        _hover={{ bg: 'gray.700' }}
-        _active={{
-          bg: 'gray.800',
-          transform: 'scale(0.95)'
-        }}
-        onClick={onOpen}
-      >
-        Add Your First Site
-      </Button>
-      {/* <Button
-        id="add-site-modal-button"
         onClick={onOpen}
         backgroundColor="gray.900"
         color="white"
@@ -90,7 +69,7 @@ const AddSiteModal = ({ children }) => {
         }}
       >
         {children}
-      </Button> */}
+      </Button>
       <Modal
         maxWidth="50px"
         initialFocusRef={initialRef}
@@ -106,14 +85,10 @@ const AddSiteModal = ({ children }) => {
             <FormControl>
               <FormLabel>Name</FormLabel>
               <Input
-                ref={initialRef}
                 id="site-input"
                 placeholder="My site"
                 name="name"
-                // {...register({
-                //   required: 'Required'
-                // })}
-                {...register('name', { required: true })}
+                ref={register({ required: true })}
               />
             </FormControl>
 
@@ -123,9 +98,9 @@ const AddSiteModal = ({ children }) => {
                 id="link-input"
                 placeholder="https://website.com"
                 name="url"
-                // ref={register({
-                //   required: 'Required'
-                // })}
+                ref={register({
+                  required: 'Required'
+                })}
               />
             </FormControl>
           </ModalBody>
@@ -145,7 +120,6 @@ const AddSiteModal = ({ children }) => {
             </Button>
           </ModalFooter>
         </ModalContent>
-        {/* </ModalContent> */}
       </Modal>
     </>
   );

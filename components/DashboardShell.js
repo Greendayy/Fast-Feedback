@@ -13,10 +13,11 @@ import {
 } from '@chakra-ui/core';
 
 import { useAuth } from '@/lib/auth';
+import AddSiteModal from './AddSiteModal';
 
 const DashboardShell = ({ children }) => {
   //获取当前登陆的用户
-  const { user } = useAuth();
+  const { user, signout } = useAuth();
 
   return (
     <Box backgroundColor="gray.100" h="100vh" w="full">
@@ -37,7 +38,11 @@ const DashboardShell = ({ children }) => {
             <Link>Feedback</Link>
           </Flex>
           <Flex justifyContent="center" alignItems="center">
-            <Link mr={4}>Account</Link>
+            {user && (
+              <Button variant="ghost" mr={2} onClick={() => signout()}>
+                Log Out
+              </Button>
+            )}
             <Avatar size="sm" src={user?.photoUrl} />
           </Flex>
         </Flex>
@@ -50,18 +55,8 @@ const DashboardShell = ({ children }) => {
         </Breadcrumb>
         <Flex justifyContent="space-between">
           <Heading mb={8}>My Sites</Heading>
-          <Button
-            backgroundColor="gray.900"
-            color="white"
-            fontWeight="medium"
-            _hover={{ bg: 'gray.700' }}
-            _active={{
-              bg: 'gray.800',
-              transform: 'scale(0.95)'
-            }}
-          >
-            + Add Site
-          </Button>
+
+          <AddSiteModal>+ Add Site</AddSiteModal>
         </Flex>
         {children}
       </Flex>
