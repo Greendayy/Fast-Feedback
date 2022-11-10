@@ -1,5 +1,6 @@
 import React from 'react';
 import useSWR, { SWRConfig } from 'swr';
+import { faker } from '@faker-js/faker';
 
 import DashboardShell from '@/components/DashboardShell';
 import EmptyState from '@/components/EmptyState';
@@ -13,8 +14,6 @@ const Dashboard = () => {
 
   const { data } = useSWR('/api/sites', fetcher);
 
-  console.log('data:', data);
-
   if (!data) {
     return (
       <DashboardShell>
@@ -22,6 +21,19 @@ const Dashboard = () => {
       </DashboardShell>
     );
   }
+  // return (
+  //   <DashboardShell>
+  //     {data.sites.length !== 0 ? (
+  //       data.sites ? (
+  //         <SiteTable sites={data.sites} />
+  //       ) : (
+  //         <EmptyState />
+  //       )
+  //     ) : (
+  //       <SiteTable />
+  //     )}
+  //   </DashboardShell>
+  // );
   return (
     <DashboardShell>
       {data.sites ? <SiteTable sites={data.sites} /> : <EmptyState />}
