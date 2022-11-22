@@ -1,27 +1,21 @@
 import React from 'react';
-import {
-  Box,
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  Heading,
-  Button,
-  Flex,
-  Link,
-  Avatar,
-  Icon
-} from '@chakra-ui/core';
+import NextLink from 'next/link';
+import { Box, Button, Flex, Link, Avatar, Icon } from '@chakra-ui/core';
 
 import { useAuth } from '@/lib/auth';
-import AddSiteModal from './AddSiteModal';
+import Footer from './Footer';
 
 const DashboardShell = ({ children }) => {
-  //获取当前登陆的用户
-  const { user, signout } = useAuth();
+  const { user } = useAuth();
 
   return (
-    <Box backgroundColor="gray.100" h="100vh" w="full">
-      <Flex backgroundColor="white" mb={16} w="full">
+    <Box backgroundColor="gray.100" h="100vh">
+      <Flex
+        backgroundColor="white"
+        mb={[8, 16]}
+        w="full"
+        borderTop="5px solid #0AF5F4"
+      >
         <Flex
           alignItems="center"
           justifyContent="space-between"
@@ -30,36 +24,35 @@ const DashboardShell = ({ children }) => {
           maxW="1250px"
           margin="0 auto"
           w="full"
-          px={1}
+          px={8}
+          h="60px"
         >
-          <Flex>
-            <Icon name="logo" mr={3} />
-            <Link mr={4}>Sites</Link>
-            <Link>Feedback</Link>
+          <Flex align="center">
+            <NextLink href="/" passHref>
+              <Link>
+                <Icon name="logo" size="24px" mr={8} />
+              </Link>
+            </NextLink>
+            <NextLink href="/sites" passHref>
+              <Link mr={4}>Sites</Link>
+            </NextLink>
+            <NextLink href="/feedback" passHref>
+              <Link>Feedback</Link>
+            </NextLink>
           </Flex>
           <Flex justifyContent="center" alignItems="center">
-            {user && (
-              <Button variant="ghost" mr={2} onClick={() => signout()}>
-                Log Out
-              </Button>
-            )}
-            <Avatar size="sm" src={user?.photoUrl} />
+            <NextLink href="/account" passHref>
+              <Link>
+                <Avatar size="sm" src={user?.photoUrl} />
+              </Link>
+            </NextLink>
           </Flex>
         </Flex>
       </Flex>
-      <Flex margin="0 auto" direction="column" maxW="1250px" px={8}>
-        <Breadcrumb>
-          <BreadcrumbItem>
-            <BreadcrumbLink>Sites</BreadcrumbLink>
-          </BreadcrumbItem>
-        </Breadcrumb>
-        <Flex justifyContent="space-between">
-          <Heading mb={8}>My Sites</Heading>
-
-          <AddSiteModal>+ Add Site</AddSiteModal>
-        </Flex>
+      <Flex margin="0 auto" direction="column" maxW="1250px" px={[0, 8, 8]}>
         {children}
       </Flex>
+      <Footer />
     </Box>
   );
 };

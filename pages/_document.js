@@ -6,7 +6,8 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <title>Fast Feedback</title>
+          <title>My new cool app</title>
+
           <link rel="icon" />
           {/* 加载自定义字体 Inter */}
           <link

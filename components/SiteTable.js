@@ -1,43 +1,66 @@
 import React from 'react';
-import { faker } from '@faker-js/faker';
-import { Box, Link, Skeleton } from '@chakra-ui/core';
+import NextLink from 'next/link';
+import { Box, Link } from '@chakra-ui/core';
+import { parseISO, format } from 'date-fns';
+
 import { Table, Tr, Th, Td } from './Table';
-import { format, parseISO } from 'date-fns';
+import { createRandomSite } from '@/lib/db-faker';
 
 const SiteTable = ({ sites }) => {
   return (
-    <Table>
-      <thead>
-        <Tr>
-          <Th>Name</Th>
-          <Th>Site Link</Th>
-          <Th>Feedback Link</Th>
-          <Th>Date Added</Th>
-          <Th>{''}</Th>
-        </Tr>
-      </thead>
-      <tbody>
-        {/* <Box as="tr" key={faker.person.fullName()}>
-          <Td fontWeight="medium">{faker.internet.userName()}</Td>
-          <Td>{faker.internet.domainName()}</Td>
-          <Td>
-            <Link>View Feedback</Link>
-          </Td>
-          <Td>{faker.date.past()}</Td>
-        </Box> */}
-
-        {sites.map((site) => (
-          <Box as="tr" key={site.id}>
-            <Td fontWeight="medium">{site.name}</Td>
-            <Td>{site.url}</Td>
+    <Box overflowX="scroll">
+      <Table w="full">
+        <thead>
+          <Tr>
+            <Th>Name</Th>
+            <Th>Site Link</Th>
+            <Th>Feedback Link</Th>
+            <Th>Date Added</Th>
+            <Th width="50px">{''}</Th>
+          </Tr>
+        </thead>
+        <tbody>
+          <Box as="tr" key={createRandomSite().siteId}>
+            <Td fontWeight="medium">{createRandomSite().siteName}</Td>
             <Td>
-              <Link>View Feedback</Link>
+              <Link href={createRandomSite().siteUrl} isExternal>
+                {createRandomSite().siteUrl}
+              </Link>
             </Td>
-            <Td>{format(parseISO(site.createdAt), 'PPpp')}</Td>
+            <Td>
+              <NextLink
+                href="/p/[siteId]"
+                as={`/p/${createRandomSite().siteId}`}
+                passHref
+              >
+                <Link color="blue.500" fontWeight="medium">
+                  View Feedback
+                </Link>
+              </NextLink>
+            </Td>
+            <Td>{createRandomSite().siteAt}</Td>
           </Box>
-        ))}
-      </tbody>
-    </Table>
+          {/* {sites.map((site) => (
+            <Box as="tr" key={site.id}>
+              <Td fontWeight="medium">{site.name}</Td>
+              <Td>
+                <Link href={site.url} isExternal>
+                  {site.url}
+                </Link>
+              </Td>
+              <Td>
+                <NextLink href="/p/[siteId]" as={`/p/${site.id}`} passHref>
+                  <Link color="blue.500" fontWeight="medium">
+                    View Feedback
+                  </Link>
+                </NextLink>
+              </Td>
+              <Td>{format(parseISO(site.createdAt), 'PPpp')}</Td>
+            </Box>
+          ))} */}
+        </tbody>
+      </Table>
+    </Box>
   );
 };
 

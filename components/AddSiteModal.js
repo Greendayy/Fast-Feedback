@@ -37,7 +37,7 @@ const AddSiteModal = ({ children }) => {
       name,
       url
     };
-    createSite(newSite);
+    const { id } = createSite(newSite);
     toast({
       title: 'Success!',
       description: "We've added your site.",
@@ -46,10 +46,10 @@ const AddSiteModal = ({ children }) => {
       isClosable: true
     });
     mutate(
-      '/api/sites',
-      async (data) => {
-        return { sites: [...data.sites, newSite] };
-      },
+      ['/api/sites', auth.user.token],
+      async (data) => ({
+        sites: [{ id, ...newSite }, ...data.sites]
+      }),
       false
     );
     onClose();
@@ -88,7 +88,9 @@ const AddSiteModal = ({ children }) => {
                 id="site-input"
                 placeholder="My site"
                 name="name"
-                ref={register({ required: true })}
+                ref={register({
+                  required: 'Required'
+                })}
               />
             </FormControl>
 

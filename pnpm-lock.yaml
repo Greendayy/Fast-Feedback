@@ -14,6 +14,7 @@ specifiers:
   firebase: 7.14.6
   firebase-admin: ^8.12.1
   framer-motion: ^7.6.1
+  js-cookie: ^3.0.1
   next: 12.3.1
   prettier: ^2.4.1
   react: 18.2.0
@@ -34,6 +35,7 @@ dependencies:
   firebase: 7.14.6
   firebase-admin: 8.13.0
   framer-motion: 7.6.5_biqbaboplfbrettd7655fr4n2y
+  js-cookie: 3.0.1
   next: 12.3.1_biqbaboplfbrettd7655fr4n2y
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -4095,6 +4097,11 @@ packages:
     dependencies:
       node-fetch: 1.7.3
       whatwg-fetch: 3.6.2
+    dev: false
+
+  /js-cookie/3.0.1:
+    resolution: {integrity: sha512-+0rgsUXZu4ncpPxRL+lNEptWMOWl9etvPHc/koSRp6MPwpRYAhmk0dUG00J4bxVV3r9uUzfo24wW0knS07SKSw==}
+    engines: {node: '>=12'}
     dev: false
 
   /js-sdsl/4.1.5:
