@@ -1,15 +1,19 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
-import { auth } from '@/lib/firebase-admin';
+import  {getUID}  from '@/lib/firebase-admin';
 import { getUserSites } from '@/lib/db-admin';
 
 export default async (req, res) => {
   try {
-    const { uid } = await auth.verifyIdToken(req.headers.token);
-    const { sites } = await getUserSites(uid);
+    console.log("==============token==============",req.headers.token)
+    const { uid } = await getUID(req.headers.token);
+    console.log("==============uid==============",uid);
 
+    const { sites } = await getUserSites(uid);
+    console.log("uid",uid,"sites",sites);
     res.status(200).json({ sites });
   } catch (error) {
-    res.status(500).json({ error });
+    console.error(error)
+    res.status(500).json({ error:error.message });
   }
 };

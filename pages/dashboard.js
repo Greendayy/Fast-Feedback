@@ -12,6 +12,7 @@ import dbFaker from '@/lib/db-faker';
 
 const Dashboard = () => {
   const { user } = useAuth();
+  // console.log("user.token",user?.token)
   const { data } = useSWR(user ? ['/api/sites', user.token] : null, fetcher);
   // const sites = data?.sites;
   console.log(data);
