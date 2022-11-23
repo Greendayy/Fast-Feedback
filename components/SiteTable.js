@@ -20,7 +20,7 @@ const SiteTable = ({ sites }) => {
           </Tr>
         </thead>
         <tbody>
-          <Box as="tr" key={createRandomSite().siteId}>
+          {/* <Box as="tr" key={createRandomSite().siteId}>
             <Td fontWeight="medium">{createRandomSite().siteName}</Td>
             <Td>
               <Link href={createRandomSite().siteUrl} isExternal>
@@ -39,8 +39,8 @@ const SiteTable = ({ sites }) => {
               </NextLink>
             </Td>
             <Td>{createRandomSite().siteAt}</Td>
-          </Box>
-          {/* {sites.map((site) => (
+          </Box> */}
+          {sites.map((site) => (
             <Box as="tr" key={site.id}>
               <Td fontWeight="medium">{site.name}</Td>
               <Td>
@@ -57,7 +57,7 @@ const SiteTable = ({ sites }) => {
               </Td>
               <Td>{format(parseISO(site.createdAt), 'PPpp')}</Td>
             </Box>
-          ))} */}
+          ))}
         </tbody>
       </Table>
     </Box>
