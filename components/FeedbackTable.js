@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Code, IconButton, Switch } from '@chakra-ui/core';
+import {RemoveButton} from  '@/components/RemoveButton'
 
 import { Table, Tr, Th, Td } from './Table';
 

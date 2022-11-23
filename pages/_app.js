@@ -1,8 +1,6 @@
 import React from 'react';
 import { ThemeProvider, CSSReset } from '@chakra-ui/core';
 import { Global, css } from '@emotion/core';
-import { Head } from 'next/document';
-
 import { AuthProvider } from '@/lib/auth';
 import theme from '@/styles/theme';
 
