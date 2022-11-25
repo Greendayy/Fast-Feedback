@@ -13,7 +13,7 @@ import LoginButtons from '@/components/LoginButtons';
 //     props: {
 //       allFeedback: feedback || []
 //     },
-//     unstable_revalidate: 1
+//     revalidate: 1
 //   };
 // }
 
