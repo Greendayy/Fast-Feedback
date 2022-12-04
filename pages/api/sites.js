@@ -1,19 +1,14 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-
-import  {getUID}  from '@/lib/firebase-admin';
-import { getUserSites } from '@/lib/db-admin';
+import { supabase } from '../../lib/supabase';
 
 export default async (req, res) => {
-  try {
-    console.log("==============token==============",req.headers.token)
-    const { uid } = await getUID(req.headers.token);
-    console.log("==============uid==============",uid);
-
-    const { sites } = await getUserSites(uid);
-    console.log("uid",uid,"sites",sites);
-    res.status(200).json({ sites });
-  } catch (error) {
+  const { data: sites, error } = await supabase
+    .from('sites')
+    .select('*')
+  if (error) {
     console.error(error)
-    res.status(500).json({ error:error.message });
+    res.status(500).json({ error: error.message });
   }
+  console.log("sites", sites);
+  res.status(200).json({ sites });
 };
