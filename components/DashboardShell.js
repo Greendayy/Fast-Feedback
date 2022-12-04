@@ -6,7 +6,7 @@ import { useAuth } from '@/lib/auth';
 import Footer from './Footer';
 
 const DashboardShell = ({ children }) => {
-  const { user } = useAuth();
+  const { user,signout } = useAuth();
 
   return (
     <Box backgroundColor="gray.100" h="100vh">
@@ -40,6 +40,8 @@ const DashboardShell = ({ children }) => {
               <Link>Feedback</Link>
             </NextLink>
           </Flex>
+          <Button onClick={() => signout()}>Sign Out</Button>
+
           <Flex justifyContent="center" alignItems="center">
             <NextLink href="/account" passHref>
               <Link>

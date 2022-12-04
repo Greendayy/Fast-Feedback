@@ -20,7 +20,7 @@ import LoginButtons from '@/components/LoginButtons';
 const Home = ({ allFeedback }) => {
   //获取身份验证状态并在其更改时重新渲染
   const auth = useAuth();
-
+  console.log("auth",auth);
   // const { email, name, photoUrl, provider, uid } = auth.user ?? {};
   return (
     <>
