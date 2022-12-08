@@ -55,7 +55,8 @@ const SiteTable = ({ sites }) => {
                   </Link>
                 </NextLink>
               </Td>
-              <Td>{format(parseISO(site.created_at), 'PPpp')}</Td>
+              <Td>{site.created_at}</Td>
+              {/* {format(parseISO(site.created_at), 'PPpp')} */}
             </Box>
           ))}
         </tbody>

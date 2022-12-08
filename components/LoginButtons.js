@@ -23,7 +23,7 @@ const LoginButtons = () => {
       >
         Continue with GitHub
       </Button>
-      <Button
+      {/* <Button
         onClick={() => auth.signinWithGoogle()}
         backgroundColor="white"
         color="gray.900"
@@ -38,7 +38,7 @@ const LoginButtons = () => {
         }}
       >
         Continue with Google
-      </Button>
+      </Button> */}
     </Flex>
   );
 };

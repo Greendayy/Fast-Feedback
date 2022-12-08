@@ -22,6 +22,7 @@ import { useAuth } from '@/lib/auth';
 import { database } from 'firebase';
 import fetcher from '@/utils/fetcher';
 import { useRangeSlider } from '@chakra-ui/react';
+import { supabase } from '@/lib/supabase';
 
 const AddSiteModal = ({ children }) => {
   const initialRef = useRef();
@@ -30,14 +31,19 @@ const AddSiteModal = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { handleSubmit, register } = useForm();
 
+  console.log('begin create site');
   const onCreateSite = ({ name, url }) => {
+    console.log('newSite');
     const newSite = {
-      anthorId: auth.user.uid,
-      createdAt: new Date().toISOString(),
+      id: crypto.randomUUID(),
+      //anthorId:auth.user.id
+      createdAt: new Date(),
+      //.toISOString()
       name,
       url
     };
-    const { id } = createSite(newSite);
+
+    // console.log('id', id);
     toast({
       title: 'Success!',
       description: "We've added your site.",
@@ -45,6 +51,7 @@ const AddSiteModal = ({ children }) => {
       duration: 5000,
       isClosable: true
     });
+    const { id } = createSite(newSite);
     mutate(
       ['/api/sites', auth.user.token],
       async (data) => ({
@@ -69,6 +76,7 @@ const AddSiteModal = ({ children }) => {
         }}
       >
         {children}
+        {/* + Add Site */}
       </Button>
       <Modal
         maxWidth="50px"
@@ -78,7 +86,6 @@ const AddSiteModal = ({ children }) => {
       >
         <ModalOverlay />
         <ModalContent as="form" onSubmit={handleSubmit(onCreateSite)}>
-          {/* <ModalContent as="form" onSubmit={handleSubmit(onCreateSite)}> */}
           <ModalHeader fontWeight="bold">Add Site</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
