@@ -23,6 +23,8 @@ import { database } from 'firebase';
 import fetcher from '@/utils/fetcher';
 import { useRangeSlider } from '@chakra-ui/react';
 import { supabase } from '@/lib/supabase';
+import { id } from 'date-fns/locale';
+import Router from 'next/router';
 
 const AddSiteModal = ({ children }) => {
   const initialRef = useRef();
@@ -32,39 +34,49 @@ const AddSiteModal = ({ children }) => {
   const { handleSubmit, register } = useForm();
 
   console.log('begin create site');
-  const onCreateSite = ({ name, url }) => {
-    console.log('newSite');
+  const onCreateSite = async ({ name, url }) => {
     const newSite = {
-      id: crypto.randomUUID(),
-      //anthorId:auth.user.id
-      createdAt: new Date(),
-      //.toISOString()
+      author_id: auth.user.uid,
+      created_at: new Date(),
       name,
       url
     };
-
+    const { data, error } = await createSite(newSite);
+    console.log("createSite res", data, error);
+    if (error) {
+      toast({
+        title: 'Failed!',
+        description: error.message,
+        status: 'error',
+        duration: 5000,
+        isClosable: true
+      });
+    }
+    if (data) {
+      toast({
+        title: 'Success!',
+        description: "We've added your site.",
+        status: 'success',
+        duration: 5000,
+        isClosable: true
+      });
+      mutate(
+        ['/api/sites', auth.user.token], async (old) => {
+          console.log("cache old:", old);
+          return { sites: [{ ...data }, ...old.sites] }
+        });
+      onClose();
+      // Router.reload('/dashboard');
+    }
     // console.log('id', id);
-    toast({
-      title: 'Success!',
-      description: "We've added your site.",
-      status: 'success',
-      duration: 5000,
-      isClosable: true
-    });
-    const { id } = createSite(newSite);
-    mutate(
-      ['/api/sites', auth.user.token],
-      async (data) => ({
-        sites: [{ id, ...newSite }, ...data.sites]
-      }),
-      false
-    );
-    onClose();
+
+
   };
 
   return (
     <>
       <Button
+        isDisabled={!auth.user}
         onClick={onOpen}
         backgroundColor="gray.900"
         color="white"
