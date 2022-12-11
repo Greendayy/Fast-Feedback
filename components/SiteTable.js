@@ -5,6 +5,7 @@ import { parseISO, format } from 'date-fns';
 
 import { Table, Tr, Th, Td } from './Table';
 import { createRandomSite } from '@/lib/db-faker';
+import DeleteSitebutton from './DeleteSiteButton';
 
 const SiteTable = ({ sites }) => {
   return (
@@ -57,6 +58,9 @@ const SiteTable = ({ sites }) => {
               </Td>
               <Td>{site.created_at}</Td>
               {/* {format(parseISO(site.created_at), 'PPpp')} */}
+              <Td>
+                <DeleteSitebutton siteId={site.id} />
+              </Td>
             </Box>
           ))}
         </tbody>
