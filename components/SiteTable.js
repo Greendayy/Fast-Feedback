@@ -41,7 +41,7 @@ const SiteTable = ({ sites }) => {
             </Td>
             <Td>{createRandomSite().siteAt}</Td>
           </Box> */}
-          {sites.map((site) => (
+          {sites.length>0&&sites.map((site) => (
             <Box as="tr" key={site.id}>
               <Td fontWeight="medium">{site.name}</Td>
               <Td>
@@ -56,7 +56,7 @@ const SiteTable = ({ sites }) => {
                   </Link>
                 </NextLink>
               </Td>
-              <Td>{site.created_at}</Td>
+              <Td>{site.created_at?format(parseISO(site.created_at), 'PPpp'):''}</Td>
               {/* {format(parseISO(site.created_at), 'PPpp')} */}
               <Td>
                 <DeleteSitebutton siteId={site.id} />

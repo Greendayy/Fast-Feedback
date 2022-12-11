@@ -8,7 +8,8 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
   IconButton,
-  Button
+  Button,
+  useToast
 } from '@chakra-ui/core';
 
 import { deleteSite } from '@/lib/db';
@@ -18,20 +19,39 @@ const DeleteSitebutton = ({ siteId }) => {
   const [isOpen, setIsOpen] = useState();
   const cancelRef = useRef();
   const auth = useAuth();
+  const toast = useToast();
 
   const onClose = () => setIsOpen(false);
-  const onDelete = () => {
-    deleteSite(siteId);
-    mutate(
-      ['/api/sites', auth.user.token],
-      async (data) => {
-        return {
-          sites: data.sites.filter((site) => site.id !== siteId)
-        };
-      },
-      false
-    );
-    onClose();
+  const onDelete = async () => {
+    const {error} = await deleteSite(siteId);
+    console.log("deleteSite res",error);
+    if (!error) {
+      toast({
+        title: 'Success!',
+        description: "We've delete your site.",
+        status: 'success',
+        duration: 5000,
+        isClosable: true
+      });
+      mutate(
+        ['/api/sites', auth.user.token],
+        async (data) => {
+          return {
+            sites: data.sites.filter((site) => site.id !== siteId)
+          };
+        }
+      );
+      onClose();
+    } else {
+      toast({
+        title: 'Failed!',
+        description: error.message,
+        status: 'error',
+        duration: 5000,
+        isClosable: true
+      });
+    }
+
   };
 
   return (
