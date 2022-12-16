@@ -23,8 +23,8 @@ const DeleteSitebutton = ({ siteId }) => {
 
   const onClose = () => setIsOpen(false);
   const onDelete = async () => {
-    const {error} = await deleteSite(siteId);
-    console.log("deleteSite res",error);
+    const { error } = await deleteSite(siteId);
+    console.log('deleteSite res', error);
     if (!error) {
       toast({
         title: 'Success!',
@@ -33,14 +33,11 @@ const DeleteSitebutton = ({ siteId }) => {
         duration: 5000,
         isClosable: true
       });
-      mutate(
-        ['/api/sites', auth.user.token],
-        async (data) => {
-          return {
-            sites: data.sites.filter((site) => site.id !== siteId)
-          };
-        }
-      );
+      mutate(['/api/sites', auth.user.token], async (data) => {
+        return {
+          sites: data.sites.filter((site) => site.id !== siteId)
+        };
+      });
       onClose();
     } else {
       toast({
@@ -51,7 +48,6 @@ const DeleteSitebutton = ({ siteId }) => {
         isClosable: true
       });
     }
-
   };
 
   return (

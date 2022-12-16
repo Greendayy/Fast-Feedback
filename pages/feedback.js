@@ -5,7 +5,7 @@ import { useAuth } from '@/lib/auth';
 import fetcher from '@/utils/fetcher';
 import DashboardShell from '@/components/DashboardShell';
 import EmptyState from '@/components/EmptyState';
-import FeedbackTable from '@/components/SiteTable';
+import FeedbackTable from '@/components/FeedbackTable';
 import SiteTableSkeleton from '@/components/SiteTableSkeleton';
 import FeedbackTableHeader from '@/components/FeedbackTableHeader';
 

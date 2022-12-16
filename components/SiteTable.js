@@ -41,28 +41,33 @@ const SiteTable = ({ sites }) => {
             </Td>
             <Td>{createRandomSite().siteAt}</Td>
           </Box> */}
-          {sites.length>0&&sites.map((site) => (
-            <Box as="tr" key={site.id}>
-              <Td fontWeight="medium">{site.name}</Td>
-              <Td>
-                <Link href={site.url} isExternal>
-                  {site.url}
-                </Link>
-              </Td>
-              <Td>
-                <NextLink href="/p/[siteId]" as={`/p/${site.id}`} passHref>
-                  <Link color="blue.500" fontWeight="medium">
-                    View Feedback
+          {sites.length > 0 &&
+            sites.map((site) => (
+              <Box as="tr" key={site.id}>
+                <Td fontWeight="medium">{site.name}</Td>
+                <Td>
+                  <Link href={site.url} isExternal>
+                    {site.url}
                   </Link>
-                </NextLink>
-              </Td>
-              <Td>{site.created_at?format(parseISO(site.created_at), 'PPpp'):''}</Td>
-              {/* {format(parseISO(site.created_at), 'PPpp')} */}
-              <Td>
-                <DeleteSitebutton siteId={site.id} />
-              </Td>
-            </Box>
-          ))}
+                </Td>
+                <Td>
+                  <NextLink href="/p/[siteId]" as={`/p/${site.id}`} passHref>
+                    <Link color="blue.500" fontWeight="medium">
+                      View Feedback
+                    </Link>
+                  </NextLink>
+                </Td>
+                <Td>
+                  {site.created_at
+                    ? format(parseISO(site.created_at), 'PPpp')
+                    : ''}
+                </Td>
+                {/* {format(parseISO(site.created_at), 'PPpp')} */}
+                <Td>
+                  <DeleteSitebutton siteId={site.id} />
+                </Td>
+              </Box>
+            ))}
         </tbody>
       </Table>
     </Box>
