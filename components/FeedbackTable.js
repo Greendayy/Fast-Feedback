@@ -18,25 +18,28 @@ const FeedbackTable = ({ allfeedback }) => {
           </Tr>
         </thead>
         <tbody>
-          {allfeedback.map((feedback) => (
-            <Box as="tr" key={feedback.id}>
-              <Td fontWeight="medium">{feedback.author}</Td>
-              <Td>{feedback.text}</Td>
-              <Td>
-                <Code>{'/'}</Code>
-              </Td>
-              <Td>
-                <Switch
-                  variantColor="green"
-                  defaultIsChecked={feedback.status === 'active'}
-                />
-              </Td>
+          {
+            //allfeedback.length > 0 &&
+            allfeedback.map((feedback) => (
+              <Box as="tr" key={feedback.id}>
+                <Td fontWeight="medium">{feedback.author}</Td>
+                <Td>{feedback.text}</Td>
+                <Td>
+                  <Code>{'/'}</Code>
+                </Td>
+                <Td>
+                  <Switch
+                    variantColor="green"
+                    defaultIsChecked={feedback.status === 'active'}
+                  />
+                </Td>
 
-              <Td>
-                <RemoveButton feedbackId={feedback.id} />
-              </Td>
-            </Box>
-          ))}
+                <Td>
+                  <RemoveButton feedbackId={feedback.id} />
+                </Td>
+              </Box>
+            ))
+          }
         </tbody>
       </Table>
     </Box>
