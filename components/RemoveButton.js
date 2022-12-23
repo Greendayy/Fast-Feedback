@@ -7,31 +7,47 @@ import {
   AlertDialogContent,
   AlertDialogOverlay,
   IconButton,
-  Button
+  Button,
+  useToast
 } from '@chakra-ui/core';
 import { deleteFeedback } from '@/lib/db';
 import { useAuth } from '@/lib/auth';
+import { mutate } from 'swr';
 
 const RemoveButton = ({ feedbackId }) => {
   const [isOpen, setIsOpen] = useState();
   const cancelRef = useRef();
   const auth = useAuth();
+  const toast = useToast();
 
   const onClose = () => setIsOpen(false);
-  const onDelete = () => {
-    deleteFeedback(feedbackId);
-    mutate(
-      ['/api/feedback', auth.user.token],
-      async (data) => {
+  const onDelete = async () => {
+    const { error } = await deleteFeedback(feedbackId);
+    if (!error) {
+      toast({
+        title: 'Success!',
+        description: "We've delete your feedback.",
+        status: 'success',
+        duration: 5000,
+        isClosable: true
+      });
+      mutate(['/api/feedback', auth.user.token], async (data) => {
         return {
           feedback: data.feedback.filter(
             (feedback) => feedback.id !== feedbackId
           )
         };
-      },
-      false
-    );
-    onClose();
+      });
+      onClose();
+    } else {
+      toast({
+        title: 'Failed!',
+        description: error.message,
+        status: 'error',
+        duration: 5000,
+        isClosable: true
+      });
+    }
   };
 
   return (

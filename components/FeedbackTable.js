@@ -20,7 +20,7 @@ const FeedbackTable = ({ allfeedback }) => {
         <tbody>
           {
             //allfeedback.length > 0 &&
-            allfeedback.map((feedback) => (
+            allfeedback?.map((feedback) => (
               <Box as="tr" key={feedback.id}>
                 <Td fontWeight="medium">{feedback.author}</Td>
                 <Td>{feedback.text}</Td>
