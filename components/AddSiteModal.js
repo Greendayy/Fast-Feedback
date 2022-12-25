@@ -39,10 +39,15 @@ const AddSiteModal = ({ children }) => {
       author_id: auth.user.uid,
       created_at: new Date(),
       name,
-      url
+      url,
+      settings: {
+        icons: true,
+        timestamp: true,
+        ratings: false
+      }
     };
     const { data, error } = await createSite(newSite);
-    console.log("createSite res", data, error);
+    console.log('createSite res', data, error);
     if (error) {
       toast({
         title: 'Failed!',
@@ -60,17 +65,14 @@ const AddSiteModal = ({ children }) => {
         duration: 5000,
         isClosable: true
       });
-      mutate(
-        ['/api/sites', auth.user.token], async (old) => {
-          console.log("cache old:", old);
-          return { sites: [{ ...data }, ...old.sites] }
-        });
+      mutate(['/api/sites', auth.user.token], async (old) => {
+        console.log('cache old:', old);
+        return { sites: [{ ...data }, ...old.sites] };
+      });
       onClose();
       // Router.reload('/dashboard');
     }
     // console.log('id', id);
-
-
   };
 
   return (

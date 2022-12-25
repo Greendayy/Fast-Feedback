@@ -8,8 +8,8 @@ import { getAllFeedback, getAllSites, getSite } from '@/lib/db-admin';
 import { useTheme } from '@/utils/useTheme';
 
 export async function getStaticProps(context) {
-  const [siteId, route] = context.params.site;
-  const { feedback } = await getAllFeedback(siteId, route);
+  const [site_id, route] = context.params.site;
+  const { feedback } = await getAllFeedback(site_id, route);
   const { site } = await getSite(siteId);
 
   return {
