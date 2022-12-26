@@ -33,12 +33,12 @@ const FeedbackPage = () => {
 
     const newFeedback = {
       siteId,
-      siteAuthorId: site.authorId,
+      site_id: site.authorId,
       route: route || '/',
       author: user.name,
-      authorId: user.uid,
+      author_id: user.uid,
       text: inputEl.current.value.replace('\n', '\n\n'),
-      createdAt: new Date().toISOString(),
+      created_at: new Date().toISOString(),
       provider: user.provider,
       status: 'pending'
     };
@@ -78,7 +78,7 @@ const FeedbackPage = () => {
   return (
     <DashboardShell>
       <SiteHeader
-        isSiteOwner={site?.authorId === user?.uid}
+        isSiteOwner={site?.author_id === user?.uid}
         site={site}
         siteId={siteId}
         route={route}
