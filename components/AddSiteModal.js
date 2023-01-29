@@ -39,12 +39,12 @@ const AddSiteModal = ({ children }) => {
       author_id: auth.user.uid,
       created_at: new Date(),
       name,
-      url,
-      settings: {
-        icons: true,
-        timestamp: true,
-        ratings: false
-      }
+      url
+      // settings: {
+      //   icons: true,
+      //   timestamp: true,
+      //   ratings: false
+      // }
     };
     const { data, error } = await createSite(newSite);
     console.log('createSite res', data, error);

@@ -29,6 +29,7 @@
     "next-seo": "^5.15.0",
     "pino": "^8.7.0",
     "pino-logflare": "^0.3.12",
+    "qrcode": "^1.5.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^4.5.5",

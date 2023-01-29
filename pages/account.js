@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import NextLink from 'next/link';
 import {
   Avatar,
   Heading,
@@ -11,13 +12,28 @@ import {
   Stat,
   StatLabel,
   StatNumber,
-  StatHelpText
+  StatHelpText,
+  useDisclosure,
+  useToast,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalCloseButton,
+  ModalBody,
+  FormControl,
+  FormLabel,
+  Input,
+  ModalFooter,
+  Select
 } from '@chakra-ui/core';
+import QRCode from 'qrcode';
 
 import { useAuth } from '@/lib/auth';
-import { goToBillingPortal } from '@/lib/db';
+import { getTrade } from '@/lib/db';
 import Page from '@/components/Page';
 import DashboardShell from '@/components/DashboardShell';
+import { useForm } from 'react-hook-form';
 
 const FeedbackUsage = () => (
   <StatGroup>
@@ -75,6 +91,35 @@ const SettingsTable = ({ stripeRole, children }) => (
 const Account = () => {
   const { user, signout } = useAuth();
   const [isBillingLoading, setBillingLoading] = useState(false);
+  const auth = useAuth();
+  // const initialRef = useRef();
+  // const { handleSubmit, register } = useForm();
+  // const { isOpen, onOpen, onClose } = useDisclosure();
+  // const toast = useToast();
+
+  // const goToBillingPortal = () => {
+  //   QRCode.toCanvas(canvas, `${getTrade}+''`, function (error, data) {
+  //     if (error) {
+  //       toast({
+  //         title: 'Failed!',
+  //         description: error.message,
+  //         status: 'error',
+  //         duration: 5000,
+  //         isClosable: true
+  //       });
+  //     }
+  //     if (data) {
+  //       toast({
+  //         title: 'Success!',
+  //         description: 'Please scan the QR code!',
+  //         status: 'success',
+  //         duration: 5000,
+  //         isClosable: true
+  //       });
+  //       onClose();
+  //     }
+  //   });
+  // };
 
   return (
     <DashboardShell>
@@ -105,25 +150,93 @@ const Account = () => {
             <Button variant="ghost" ml={4} onClick={() => signout()}>
               Log Out
             </Button>
-            <Button
-              onClick={() => {
-                setBillingLoading(true);
-                goToBillingPortal();
-              }}
-              backgroundColor="gray.900"
-              color="white"
-              fontWeight="medium"
-              ml={4}
-              isLoading={isBillingLoading}
-              _hover={{ bg: 'gray.700' }}
-              _active={{
-                bg: 'gray.800',
-                transform: 'scale(0.95)'
-              }}
+            {/* <NextLink href="/billing" passHref> */}
+            <NextLink
+              href="https://buy.stripe.com/test_bIY02r0am3fTgaAdQQ"
+              passHref
             >
-              Manage Billing
-            </Button>
+              <Button
+                // onClick={onOpen}
+                isDisabled={!auth.user}
+                backgroundColor="gray.900"
+                color="white"
+                fontWeight="medium"
+                ml={4}
+                isLoading={isBillingLoading}
+                _hover={{ bg: 'gray.700' }}
+                _active={{
+                  bg: 'gray.800',
+                  transform: 'scale(0.95)'
+                }}
+              >
+                Manage Billing
+              </Button>
+            </NextLink>
+            {/* </NextLink> */}
+
+            {/* <Modal
+              maxWidth="50px"
+              initialFocusRef={initialRef}
+              isOpen={isOpen}
+              onClose={onClose}
+            >
+              <ModalOverlay />
+              <ModalContent
+                as="form"
+                onSubmit={handleSubmit(goToBillingPortal)}
+              >
+                <ModalHeader fontWeight="bold">Billing Portal</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody pb={6}>
+                  <Select placeholder="Subscription Item">
+                    <option
+                      value="7 days free trial"
+                      ref={register({
+                        required: 'Required'
+                      })}
+                    >
+                      7 days free trial
+                    </option>
+                    <option
+                      value="monthly subscription"
+                      ref={register({
+                        required: 'Required'
+                      })}
+                    >
+                      monthly subscription
+                    </option>
+                    <option
+                      value="annually"
+                      ref={register({
+                        required: 'Required'
+                      })}
+                    >
+                      annually subscription
+                    </option>
+                  </Select>
+                </ModalBody>
+
+                <ModalFooter>
+                  <Button onClick={onClose} mr={3} fontWeight="medium">
+                    Cancel
+                  </Button>
+                  <Button
+                    id="Paid"
+                    backgroundColor="#99FFFE"
+                    color="#194D4C"
+                    fontWeight="medium"
+                    type="submit"
+                    Loading={() => setBillingLoading(true)}
+                  >
+                    Paid
+                  </Button>
+                </ModalFooter>
+              </ModalContent>
+            </Modal> */}
           </Flex>
+          {/* <Flex margin="0 auto" marginTop="10px">
+            <canvas id="canvas"></canvas>
+          </Flex> */}
         </SettingsTable>
       </Flex>
     </DashboardShell>
