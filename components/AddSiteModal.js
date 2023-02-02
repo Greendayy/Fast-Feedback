@@ -19,7 +19,7 @@ import {
 
 import { createSite } from '@/lib/db';
 import { useAuth } from '@/lib/auth';
-import { database } from 'firebase';
+
 import fetcher from '@/utils/fetcher';
 import { useRangeSlider } from '@chakra-ui/react';
 import { supabase } from '@/lib/supabase';

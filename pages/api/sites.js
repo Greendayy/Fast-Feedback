@@ -27,7 +27,8 @@
 //   }
 // };
 //Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { supabase } from '../../lib/supabase';
+
+import { supabase } from '@/lib/supabase';
 
 export default async (req, res) => {
   const { data: sites, error } = await supabase
