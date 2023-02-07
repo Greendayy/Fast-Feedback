@@ -4,7 +4,7 @@ import { logger, formatObjectKeys } from '@/utils/logger';
 export default async (req, res) => {
   try {
     const { siteId } = req.query;
-    console.log('get siteId', siteId);
+    console.log('get siteId api:', siteId);
     const { site } = await getSite(siteId);
 
     res.status(200).json({ site });

@@ -89,7 +89,7 @@ const SettingsTable = ({ stripeRole, children }) => (
 );
 
 const Account = () => {
-  const { user, signout } = useAuth();
+  const { user, signout, signinWithGitHub } = useAuth();
   const [isBillingLoading, setBillingLoading] = useState(false);
   const auth = useAuth();
   // const initialRef = useRef();
@@ -147,9 +147,16 @@ const Account = () => {
             addresses through the secure portal.
           </Text>
           <Flex justify="flex-end">
-            <Button variant="ghost" ml={4} onClick={() => signout()}>
-              {user ? 'Log Out' : 'Log In'}
-            </Button>
+            {user ? (
+              <Button size="sm" onClick={() => signout()}>
+                Log Out
+              </Button>
+            ) : (
+              <Button size="sm" onClick={() => signinWithGitHub()}>
+                Log In
+              </Button>
+            )}
+
             {/* <NextLink href="/billing" passHref> */}
             <NextLink
               href="https://buy.stripe.com/test_bIY02r0am3fTgaAdQQ"
@@ -173,7 +180,6 @@ const Account = () => {
               </Button>
             </NextLink>
             {/* </NextLink> */}
-
             {/* <Modal
               maxWidth="50px"
               initialFocusRef={initialRef}

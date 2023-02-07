@@ -32,7 +32,9 @@ const FeedbackPage = () => {
   );
 
   const site = siteData?.site;
+  console.log('vf siteData:', siteData);
   const allFeedback = feedbackData?.feedback;
+  console.log('vf feedbackData:', feedbackData);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -84,7 +86,7 @@ const FeedbackPage = () => {
   return (
     <DashboardShell>
       <SiteHeader
-        isSiteOwner={site?.author_id === user?.uid}
+        isSiteOwner={site?.author_id == user?.uid}
         site={site}
         siteId={siteId}
         route={route}
