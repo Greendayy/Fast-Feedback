@@ -4,13 +4,14 @@ import { logger, formatObjectKeys } from '@/utils/logger';
 export default async (req, res) => {
   try {
     const { siteId } = req.query;
+    console.log('get siteId', siteId);
     const { site } = await getSite(siteId);
 
     res.status(200).json({ site });
   } catch (error) {
     res.status(500).json({ error: error.mesage });
   }
-  console.log('get siteId', res);
+  // console.log('get siteId', res);
 };
 // import { getAllFeedback, getAllSites } from '@/lib/db-admin';
 // import { Box } from '@chakra-ui/core';

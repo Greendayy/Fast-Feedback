@@ -148,7 +148,7 @@ const Account = () => {
           </Text>
           <Flex justify="flex-end">
             <Button variant="ghost" ml={4} onClick={() => signout()}>
-              Log Out
+              {user ? 'Log Out' : 'Log In'}
             </Button>
             {/* <NextLink href="/billing" passHref> */}
             <NextLink

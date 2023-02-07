@@ -43,7 +43,7 @@ const DashboardShell = ({ children }) => {
 
           <Flex justifyContent="center" alignItems="center">
             <Button size="sm" onClick={() => signout()}>
-              Sign Out
+              {user ? 'Sign Out' : 'Sign In'}
             </Button>
             <NextLink href="/account" passHref>
               <Link>

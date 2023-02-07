@@ -22,8 +22,14 @@ const FeedbackPage = () => {
     ? `/api/feedback/${siteId}/${route}`
     : `/api/feedback/${siteId}`;
 
-  const { data: siteData } = useSWR(`/api/site/${siteId}`, fetcher);
-  const { data: feedbackData } = useSWR(feedbackApi, fetcher);
+  const { data: siteData } = useSWR(
+    user ? [`/api/site/${siteId}`, user.token] : null,
+    fetcher
+  );
+  const { data: feedbackData } = useSWR(
+    user ? [feedbackApi, user.token] : null,
+    fetcher
+  );
 
   const site = siteData?.site;
   const allFeedback = feedbackData?.feedback;
