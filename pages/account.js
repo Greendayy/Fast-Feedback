@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import useSWR from 'swr';
 import fetcher from '@/utils/fetcher';
 
@@ -15,28 +15,11 @@ import {
   Stat,
   StatLabel,
   StatNumber,
-  StatHelpText,
-  useDisclosure,
-  useToast,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  FormControl,
-  FormLabel,
-  Input,
-  ModalFooter,
-  Select
-} from '@chakra-ui/core';
-import QRCode from 'qrcode';
+  StatHelpText} from '@chakra-ui/core';
 
 import { useAuth } from '@/lib/auth';
-import { getTrade } from '@/lib/db';
 import Page from '@/components/Page';
 import DashboardShell from '@/components/DashboardShell';
-import { useForm } from 'react-hook-form';
 
 const FeedbackUsage = ({ fadebacks_num = 0, sites_num = 0 }) => (
   <StatGroup>
@@ -94,11 +77,10 @@ const SettingsTable = ({ stripeRole, children }) => (
 const Account = () => {
   const { user, signout, signinWithGitHub } = useAuth();
   const [isBillingLoading, setBillingLoading] = useState(false);
-  const auth = useAuth();
 
-  const { data: { feedback } } = useSWR(user ? ['/api/feedback', user.token] : null, fetcher);
-  const { data: { sites } } = useSWR(user ? ['/api/sites', user.token] : null, fetcher);
-  console.log(user, feedback, sites);
+  // const { data: { feedback } } = useSWR(user ? ['/api/feedback', user.token] : null, fetcher);
+  // const { data: { sites } } = useSWR(user ? ['/api/sites', user.token] : null, fetcher);
+  // console.log(user, feedback, sites);
 
   return (
     <DashboardShell>
@@ -119,7 +101,8 @@ const Account = () => {
           <Text>{user?.email}</Text>
         </Flex>
         <SettingsTable stripeRole={user?.stripeRole}>
-          {(feedback && sites) && <FeedbackUsage fadebacks_num={feedback?.length} sites_num={sites?.length} />}
+        <FeedbackUsage />
+          {/* {user ? ((feedback && sites) && <FeedbackUsage fadebacks_num={feedback?.length} sites_num={sites?.length} />) : <FeedbackUsage />} */}
           <Text my={4}>
             Fast Feedback uses Stripe to update, change, or cancel your
             subscription. You can also update card information and billing
@@ -143,7 +126,7 @@ const Account = () => {
             >
               <Button
                 // onClick={onOpen}
-                isDisabled={!auth.user}
+                isDisabled={!user}
                 backgroundColor="gray.900"
                 color="white"
                 fontWeight="medium"
