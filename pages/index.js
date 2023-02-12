@@ -1,4 +1,4 @@
-//任何需要身份验证状态的组件
+//任何需要身份验证状态的组件;
 import Head from 'next/head';
 import { useAuth } from '@/lib/auth';
 import { Button, Flex, Text, Icon, Link, Box } from '@chakra-ui/core';
@@ -17,10 +17,10 @@ import LoginButtons from '@/components/LoginButtons';
 //   };
 // }
 
-const Home = ({ allFeedback }) => {
+const Home = () => {
   //获取身份验证状态并在其更改时重新渲染
   const auth = useAuth();
-
+  console.log('index auth:', auth);
   // const { email, name, photoUrl, provider, uid } = auth.user ?? {};
   return (
     <>
@@ -51,14 +51,14 @@ const Home = ({ allFeedback }) => {
         Current user:<Code>{auth.user ? auth.user.email : <br />}</Code>
       </Text> */}
           {/* 用户授权为true则读取并显示用户email,button显示“sign out” */}
-          {/* {auth.user ? ( 
-        <img src={photoUrl} width="60px" height="60px"></img> 
+          {/* {auth.user ? (
+        <img src={photoUrl} width="60px" height="60px"></img>
       <p>
             uid:{uid} {name}
           </p>
           <p>Email: {email}</p>
-          <p>provider: {provider}</p> 
-        点击按钮调用signout函数清理用户数据 
+          <p>provider: {provider}</p>
+        点击按钮调用signout函数清理用户数据
         <Dashboard />
       ) : (
         <Button onClick={() => auth.signout()}>Sign Out</Button>

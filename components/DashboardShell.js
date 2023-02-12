@@ -6,7 +6,7 @@ import { useAuth } from '@/lib/auth';
 import Footer from './Footer';
 
 const DashboardShell = ({ children }) => {
-  const { user } = useAuth();
+  const { user, signout, signinWithGitHub } = useAuth();
 
   return (
     <Box backgroundColor="gray.100" h="100vh">
@@ -40,10 +40,21 @@ const DashboardShell = ({ children }) => {
               <Link>Feedback</Link>
             </NextLink>
           </Flex>
+
           <Flex justifyContent="center" alignItems="center">
+            {user ? (
+              <Button size="sm" onClick={() => signout()}>
+                Sign Out
+              </Button>
+            ) : (
+              <Button size="sm" onClick={() => signinWithGitHub()}>
+                Sign In
+              </Button>
+            )}
+
             <NextLink href="/account" passHref>
               <Link>
-                <Avatar size="sm" src={user?.photoUrl} />
+                <Avatar ml={3} size="sm" src={user?.photoUrl} />
               </Link>
             </NextLink>
           </Flex>

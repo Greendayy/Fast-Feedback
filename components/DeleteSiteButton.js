@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { mutate } from 'swr';
 import {
   AlertDialog,
   AlertDialogBody,
@@ -10,11 +11,11 @@ import {
   Button,
   useToast
 } from '@chakra-ui/core';
-import { deleteFeedback } from '@/lib/db';
-import { useAuth } from '@/lib/auth';
-import { mutate } from 'swr';
 
-const RemoveButton = ({ feedbackId }) => {
+import { deleteSite } from '@/lib/db';
+import { useAuth } from '@/lib/auth';
+
+const DeleteSitebutton = ({ siteId }) => {
   const [isOpen, setIsOpen] = useState();
   const cancelRef = useRef();
   const auth = useAuth();
@@ -22,20 +23,19 @@ const RemoveButton = ({ feedbackId }) => {
 
   const onClose = () => setIsOpen(false);
   const onDelete = async () => {
-    const { error } = await deleteFeedback(feedbackId);
+    const { error } = await deleteSite(siteId);
+    console.log('deleteSite res', error);
     if (!error) {
       toast({
         title: 'Success!',
-        description: "We've delete your feedback.",
+        description: "We've delete your site.",
         status: 'success',
         duration: 5000,
         isClosable: true
       });
-      mutate(['/api/feedback', auth.user.token], async (data) => {
+      mutate(['/api/sites', auth.user.token], async (data) => {
         return {
-          feedback: data.feedback.filter(
-            (feedback) => feedback.id !== feedbackId
-          )
+          sites: data.sites.filter((site) => site.id !== siteId)
         };
       });
       onClose();
@@ -53,7 +53,7 @@ const RemoveButton = ({ feedbackId }) => {
   return (
     <>
       <IconButton
-        aria-label="Delete feedback"
+        aria-label="Delete site"
         icon="delete"
         variant="ghost"
         onClick={() => setIsOpen(true)}
@@ -66,10 +66,11 @@ const RemoveButton = ({ feedbackId }) => {
         <AlertDialogOverlay />
         <AlertDialogContent>
           <AlertDialogHeader fontSize="lg" fontWeight="bold">
-            Delete Feedback
+            Delete Site
           </AlertDialogHeader>
           <AlertDialogBody>
-            Are you sure? You can't undo this action afterwards.
+            Are you sure? This will also delete all feedback left on the site.
+            You can't undo this action afterwards.
           </AlertDialogBody>
           <AlertDialogFooter>
             <Button ref={cancelRef} onClick={onClose}>
@@ -90,4 +91,4 @@ const RemoveButton = ({ feedbackId }) => {
   );
 };
 
-export default RemoveButton;
+export default DeleteSitebutton;
