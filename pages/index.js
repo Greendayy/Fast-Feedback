@@ -17,10 +17,10 @@ import LoginButtons from '@/components/LoginButtons';
 //   };
 // }
 
-const Home = ({ allFeedback }) => {
+const Home = () => {
   //获取身份验证状态并在其更改时重新渲染
-  const {user} = useAuth();
-  console.log('index auth:', user);
+  const auth = useAuth();
+  console.log('index auth:', auth);
   // const { email, name, photoUrl, provider, uid } = auth.user ?? {};
   return (
     <>
@@ -80,7 +80,7 @@ const Home = ({ allFeedback }) => {
             </Link>
             {`. It's the easiest way to add comments or reviews to your static site. Try it out by leaving a comment below. After the comment is approved, it will display below.`}
           </Text>
-          {user ? (
+          {auth.user ? (
             <Button
               as="a"
               href="/dashboard"

@@ -1,4 +1,7 @@
 import { useRef, useState } from 'react';
+import useSWR from 'swr';
+import fetcher from '@/utils/fetcher';
+
 import NextLink from 'next/link';
 import {
   Avatar,
@@ -35,17 +38,17 @@ import Page from '@/components/Page';
 import DashboardShell from '@/components/DashboardShell';
 import { useForm } from 'react-hook-form';
 
-const FeedbackUsage = () => (
+const FeedbackUsage = ({ fadebacks_num = 0, sites_num = 0 }) => (
   <StatGroup>
     <Stat>
       <StatLabel color="gray.700">Feedback</StatLabel>
-      <StatNumber fontWeight="medium">∞</StatNumber>
-      <StatHelpText>10,000 limit</StatHelpText>
+      <StatNumber fontWeight="medium">{fadebacks_num}/∞</StatNumber>
+      <StatHelpText>Unlimited limit</StatHelpText>
     </Stat>
 
     <Stat>
       <StatLabel color="gray.700">Sites</StatLabel>
-      <StatNumber fontWeight="medium">1/∞</StatNumber>
+      <StatNumber fontWeight="medium">{sites_num}/∞</StatNumber>
       <StatHelpText>Unlimited Sites</StatHelpText>
     </Stat>
   </StatGroup>
@@ -92,34 +95,10 @@ const Account = () => {
   const { user, signout, signinWithGitHub } = useAuth();
   const [isBillingLoading, setBillingLoading] = useState(false);
   const auth = useAuth();
-  // const initialRef = useRef();
-  // const { handleSubmit, register } = useForm();
-  // const { isOpen, onOpen, onClose } = useDisclosure();
-  // const toast = useToast();
 
-  // const goToBillingPortal = () => {
-  //   QRCode.toCanvas(canvas, `${getTrade}+''`, function (error, data) {
-  //     if (error) {
-  //       toast({
-  //         title: 'Failed!',
-  //         description: error.message,
-  //         status: 'error',
-  //         duration: 5000,
-  //         isClosable: true
-  //       });
-  //     }
-  //     if (data) {
-  //       toast({
-  //         title: 'Success!',
-  //         description: 'Please scan the QR code!',
-  //         status: 'success',
-  //         duration: 5000,
-  //         isClosable: true
-  //       });
-  //       onClose();
-  //     }
-  //   });
-  // };
+  const { data: { feedback } } = useSWR(user ? ['/api/feedback', user.token] : null, fetcher);
+  const { data: { sites } } = useSWR(user ? ['/api/sites', user.token] : null, fetcher);
+  console.log(user, feedback, sites);
 
   return (
     <DashboardShell>
@@ -140,7 +119,7 @@ const Account = () => {
           <Text>{user?.email}</Text>
         </Flex>
         <SettingsTable stripeRole={user?.stripeRole}>
-          <FeedbackUsage />
+          {(feedback && sites) && <FeedbackUsage fadebacks_num={feedback?.length} sites_num={sites?.length} />}
           <Text my={4}>
             Fast Feedback uses Stripe to update, change, or cancel your
             subscription. You can also update card information and billing
