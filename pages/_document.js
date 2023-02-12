@@ -13,7 +13,6 @@ class MyDocument extends Document {
             name="msapplication-config"
           />
           <link href="/favicons/favicon.ico" rel="shortcut icon" />
-          <link href="/favicons/site.webmanifest" rel="manifest" />
           <link
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
             rel="stylesheet"

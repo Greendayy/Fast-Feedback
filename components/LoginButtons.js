@@ -3,12 +3,12 @@ import { Button, Flex } from '@chakra-ui/core';
 import { useAuth } from '@/lib/auth';
 
 const LoginButtons = () => {
-  const auth = useAuth();
+  const {signinWithGitHub} = useAuth();
 
   return (
     <Flex direction={['column', 'row']}>
       <Button
-        onClick={() => auth.signinWithGitHub()}
+        onClick={() => signinWithGitHub()}
         backgroundColor="gray.900"
         color="white"
         fontWeight="medium"
