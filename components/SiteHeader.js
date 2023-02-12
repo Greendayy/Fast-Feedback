@@ -27,7 +27,7 @@ const SiteHeader = ({ site, siteId, route }) => {
             <BreadcrumbLink>{siteName || '-'}</BreadcrumbLink>
           </NextLink>
         </BreadcrumbItem>
-        {siteName && route && (
+        {siteName  && (
           <BreadcrumbItem>
             <NextLink href={`/site/${siteId}/${route}`} passHref>
               <BreadcrumbLink>{route}</BreadcrumbLink>
