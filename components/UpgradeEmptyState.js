@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Heading, Flex, Text, Button } from '@chakra-ui/core';
 
 import { useAuth } from '@/lib/auth';
-import { createCheckoutSession } from '@/lib/db';
+// import { createCheckoutSession } from '@/lib/db';
 
 const UpgradeEmptyState = () => {
   const { user } = useAuth();
@@ -25,7 +25,6 @@ const UpgradeEmptyState = () => {
       <Button
         onClick={() => {
           setCheckoutLoading(true);
-          createCheckoutSession(user.uid);
         }}
         backgroundColor="gray.900"
         color="white"
