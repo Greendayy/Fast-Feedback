@@ -3,11 +3,13 @@ import { logger, formatObjectKeys } from '@/utils/logger';
 
 export default async (req, res) => {
   try {
-    const { siteId } = req.query;
+    const {query,method,body}=req
+    console.log("site api",query,method,body);
+    const { siteId } = query;
     console.log('get siteId api:', siteId);
-    const { site } = await getSite(siteId);
+    const r = await getSite(siteId);
 
-    res.status(200).json({ site });
+    res.status(200).json( {data:r.data} );
   } catch (error) {
     res.status(500).json({ error: error.mesage });
   }

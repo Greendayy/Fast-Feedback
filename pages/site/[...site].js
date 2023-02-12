@@ -12,7 +12,7 @@ import SiteHeader from '@/components/SiteHeader';
 import LoginButtons from '@/components/LoginButtons';
 
 const FeedbackPage = () => {
-  const { user, loading } = useAuth();
+  const { user } = useAuth();
   const inputEl = useRef(null);
   const router = useRouter();
   const siteAndRoute = router.query?.site;
@@ -21,12 +21,12 @@ const FeedbackPage = () => {
   const feedbackApi = route
     ? `/api/feedback/${siteId}/${route}`
     : `/api/feedback/${siteId}`;
-
-  const { data: siteData } = useSWR(
+  console.log("site page:",user,feedbackApi);
+  const  siteData  = useSWR(
     user ? [`/api/site/${siteId}`, user.token] : null,
     fetcher
   );
-  const { data: feedbackData } = useSWR(
+  const feedbackData  = useSWR(
     user ? [feedbackApi, user.token] : null,
     fetcher
   );
@@ -107,7 +107,7 @@ const FeedbackPage = () => {
               isDisabled={!user}
               h="100px"
             />
-            {!loading && <LoginOrLeaveFeedback />}
+            {!user && <LoginOrLeaveFeedback />}
           </FormControl>
         </Box>
         {allFeedback &&

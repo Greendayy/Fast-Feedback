@@ -52,8 +52,7 @@ const SiteTable = ({ sites }) => {
                 </Td>
                 <Td>
                   <NextLink
-                    href="/site/[siteId]"
-                    as={`/site/${site.id}`}
+                    href={`/site/${site.id}`}
                     passHref
                   >
                     <Link color="blue.500" fontWeight="medium">
