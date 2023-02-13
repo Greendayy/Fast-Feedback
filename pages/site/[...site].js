@@ -21,20 +21,17 @@ const FeedbackPage = () => {
   const feedbackApi = route
     ? `/api/feedback/${siteId}/${route}`
     : `/api/feedback/${siteId}`;
-  console.log("site page:",user,feedbackApi);
-  const  siteData  = useSWR(
+  console.log("site page:", user, feedbackApi);
+  const { data: site } = useSWR(
     user ? [`/api/site/${siteId}`, user.token] : null,
     fetcher
   );
-  const feedbackData  = useSWR(
+  const { data: feedbackData } = useSWR(
     user ? [feedbackApi, user.token] : null,
     fetcher
   );
-
-  const site = siteData?.site;
-  console.log('vf siteData:', siteData);
-  const allFeedback = feedbackData?.feedback;
-  console.log('vf feedbackData:', feedbackData);
+  console.log("site detail page", siteId, site, feedbackData);
+  const allFeedback = feedbackData;
 
   const onSubmit = (e) => {
     e.preventDefault();
