@@ -1,6 +1,4 @@
 import { useState } from 'react';
-import useSWR from 'swr';
-import fetcher from '@/utils/fetcher';
 
 import NextLink from 'next/link';
 import {
@@ -15,7 +13,8 @@ import {
   Stat,
   StatLabel,
   StatNumber,
-  StatHelpText} from '@chakra-ui/core';
+  StatHelpText
+} from '@chakra-ui/core';
 
 import { useAuth } from '@/lib/auth';
 import Page from '@/components/Page';
@@ -101,7 +100,7 @@ const Account = () => {
           <Text>{user?.email}</Text>
         </Flex>
         <SettingsTable stripeRole={user?.stripeRole}>
-        <FeedbackUsage />
+          <FeedbackUsage />
           {/* {user ? ((feedback && sites) && <FeedbackUsage fadebacks_num={feedback?.length} sites_num={sites?.length} />) : <FeedbackUsage />} */}
           <Text my={4}>
             Fast Feedback uses Stripe to update, change, or cancel your
