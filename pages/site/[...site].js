@@ -21,7 +21,7 @@ const FeedbackPage = () => {
   const feedbackApi = route
     ? `/api/feedback/${siteId}/${route}`
     : `/api/feedback/${siteId}`;
-  console.log("site page:", user, feedbackApi);
+  console.log('site page:', user, feedbackApi);
   const { data: site } = useSWR(
     user ? [`/api/site/${siteId}`, user.token] : null,
     fetcher
@@ -30,7 +30,7 @@ const FeedbackPage = () => {
     user ? [feedbackApi, user.token] : null,
     fetcher
   );
-  console.log("site detail page", siteId, site, feedbackData);
+  console.log('site detail page', siteId, site, feedbackData);
   const allFeedback = feedbackData;
 
   const onSubmit = (e) => {
@@ -63,7 +63,7 @@ const FeedbackPage = () => {
     user ? (
       <Button
         type="submit"
-        isDisabled={!siteData || !feedbackData}
+        // isDisabled={!siteData || !feedbackData}
         backgroundColor="gray.900"
         color="white"
         fontWeight="medium"
