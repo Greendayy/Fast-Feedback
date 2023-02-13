@@ -104,7 +104,9 @@ const FeedbackPage = () => {
               isDisabled={!user}
               h="100px"
             />
-            {!user && <LoginOrLeaveFeedback />}
+            {/* {!user && */}
+            <LoginOrLeaveFeedback />
+            {/* } */}
           </FormControl>
         </Box>
         {allFeedback &&
