@@ -67,6 +67,7 @@ const FeedbackPage = () => {
         backgroundColor="gray.900"
         color="white"
         fontWeight="medium"
+        onClick={() => onSubmit}
         mt={4}
         _hover={{ bg: 'gray.700' }}
         _active={{
