@@ -38,14 +38,14 @@ const FeedbackPage = () => {
 
     const newFeedback = {
       siteId,
-      site_id: site.authorId,
+      siteAuthorId: site.author_id,
       route: route || '/',
       author: user.name,
-      author_id: user.uid,
+      authorId: user.uid,
       text: inputEl.current.value.replace('\n', '\n\n'),
       created_at: new Date().toISOString(),
       provider: user.provider,
-      status: 'pending'
+      status: 'active'
     };
 
     inputEl.current.value = '';
@@ -67,7 +67,6 @@ const FeedbackPage = () => {
         backgroundColor="gray.900"
         color="white"
         fontWeight="medium"
-        onClick={() => onSubmit}
         mt={4}
         _hover={{ bg: 'gray.700' }}
         _active={{
