@@ -43,7 +43,7 @@ const Home = () => {
             }`
               }}
             />
-            <title fontWeight="600">Fast Feedback</title>
+            <title fontWeight="600">Fast-Feedback</title>
           </Head>
 
           {/*  */}
