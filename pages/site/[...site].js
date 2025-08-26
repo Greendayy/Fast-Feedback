@@ -53,7 +53,7 @@ const FeedbackPage = () => {
     mutate(
       feedbackApi,
       async (data) => ({
-        feedback: [newFeedback, ...data.feedback]
+        feedback: [newFeedback, ...(data?.feedback || [])]
       }),
       false
     );
