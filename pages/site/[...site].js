@@ -31,25 +31,35 @@ const FeedbackPage = () => {
     fetcher
   );
   console.log('site detail page', siteId, site, feedbackData);
-  const allFeedback = feedbackData;
+  const allFeedback = Array.isArray(feedbackData?.feedback)
+    ? feedbackData.feedback
+    : Array.isArray(feedbackData)
+    ? feedbackData
+    : [];
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
 
     const newFeedback = {
-      siteId,
-      siteAuthorId: site.author_id,
-      route: route || '/',
+      // siteId,
+      // siteAuthorId: site.author_id,
+      // route: route || '/',
       author: user.name,
-      authorId: user.uid,
+      author_id: user.uid,
       text: inputEl.current.value.replace('\n', '\n\n'),
-      created_at: new Date().toISOString(),
-      provider: user.provider,
-      status: 'active'
+      created_at: new Date().toISOString()
+      // provider: user.provider,
+      // status: 'active'
     };
 
     inputEl.current.value = '';
-    createFeedback(newFeedback);
+    const res = await createFeedback(newFeedback);
+    console.log('createFeedback result:', res);
+
+    if (res?.error) {
+      alert('Failed: ' + res.error.message);
+      return;
+    }
     mutate(
       feedbackApi,
       async (data) => ({
