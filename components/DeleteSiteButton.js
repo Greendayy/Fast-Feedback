@@ -65,18 +65,28 @@ const DeleteSitebutton = ({ site }) => {
     }
   };
 
-  // 如果不是所有者，不显示删除按钮
-  if (!isOwner) {
-    return null;
-  }
-
   return (
     <>
       <IconButton
         aria-label="Delete site"
         icon="delete"
         variant="ghost"
-        onClick={() => setIsOpen(true)}
+        isDisabled={!isOwner}
+        opacity={isOwner ? 1 : 0.4}
+        cursor={isOwner ? 'pointer' : 'not-allowed'}
+        onClick={() => {
+          if (!isOwner) {
+            toast({
+              title: 'Permission Denied!',
+              description: 'You can only delete sites that you created.',
+              status: 'error',
+              duration: 5000,
+              isClosable: true
+            });
+            return;
+          }
+          setIsOpen(true);
+        }}
       />
       <AlertDialog
         isOpen={isOpen}
