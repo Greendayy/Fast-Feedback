@@ -15,15 +15,30 @@ import {
 import { deleteSite } from '@/lib/db';
 import { useAuth } from '@/lib/auth';
 
-const DeleteSitebutton = ({ siteId }) => {
+const DeleteSitebutton = ({ site }) => {
   const [isOpen, setIsOpen] = useState();
   const cancelRef = useRef();
   const auth = useAuth();
   const toast = useToast();
 
+  // 检查当前用户是否是站点的创建者
+  const isOwner = auth.user && site.author_id === auth.user.uid;
+
   const onClose = () => setIsOpen(false);
   const onDelete = async () => {
-    const { error } = await deleteSite(siteId);
+    // 再次检查权限
+    if (!isOwner) {
+      toast({
+        title: 'Permission Denied!',
+        description: 'You can only delete sites that you created.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true
+      });
+      return;
+    }
+
+    const { error } = await deleteSite(site.id, auth.user.uid);
     console.log('deleteSite res', error);
     if (!error) {
       toast({
@@ -35,7 +50,7 @@ const DeleteSitebutton = ({ siteId }) => {
       });
       mutate(['/api/sites', auth.user.token], async (data) => {
         return {
-          sites: data.sites.filter((site) => site.id !== siteId)
+          sites: data.sites.filter((s) => s.id !== site.id)
         };
       });
       onClose();
@@ -49,6 +64,11 @@ const DeleteSitebutton = ({ siteId }) => {
       });
     }
   };
+
+  // 如果不是所有者，不显示删除按钮
+  if (!isOwner) {
+    return null;
+  }
 
   return (
     <>
